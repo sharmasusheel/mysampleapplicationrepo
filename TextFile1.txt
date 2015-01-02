@@ -1,0 +1,65 @@
+﻿CREATE TABLE [dbo].[satetbl] (
+    [Id]       INT           IDENTITY (1, 1) NOT NULL,
+    [satename] NVARCHAR (50) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+
+CREATE TABLE [dbo].[citytbl] (
+    [Id]       INT           IDENTITY (1, 1) NOT NULL,
+    [cityname] NVARCHAR (50) NULL,
+    [stateid]  VARCHAR (50)  NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+
+CREATE TABLE [dbo].[usertbl] (
+    [Id]      INT           IDENTITY (1, 1) NOT NULL,
+    [name]    NVARCHAR (50) NULL,
+    [stateid] INT           NULL,
+    [cityid]  INT           NULL,
+    [ghender] NVARCHAR (50) NULL,
+    [hobbies] NVARCHAR (50) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+
+create proc getstate
+as
+select * from satetbl
+
+ CREATE proc getcity
+
+ @id int
+ as
+
+ select * from citytbl where stateid = @id;
+
+
+ 
+CREATE proc getalldata
+
+as
+
+select usertbl.* ,citytbl.cityname,satetbl.satename from usertbl
+
+inner join citytbl on citytbl.Id = usertbl.cityid
+inner join satetbl on satetbl.Id = usertbl.stateid
+
+
+
+create proc insertdata
+@stateid int,
+@cityid int
+as
+insert into usertbl(stateid, cityid)values(@stateid , @cityid);
+
+create proc updatedata
+@id int,
+@stateid int,
+@cityid int
+
+as update usertbl set stateid = @stateid , cityid =   @cityid where Id = @id;
